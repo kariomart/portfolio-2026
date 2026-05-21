@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Builder — Martin Nayeri</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: #0f0f0f;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body { padding: 28px 36px 80px; max-width: 900px; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Header ─── */
+    .hd {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .hd-title { font-weight: 400; }
+    .hd-title span { color: rgba(255,255,255,.35); }
+    .hd-back {
+      font-size: 12px;
+      color: rgba(255,255,255,.35);
+      transition: color .12s;
+    }
+    .hd-back:hover { color: #fff; }
+
+    /* ─── Section headers ─── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 12px;
+    }
+
+    /* ─── Tag shortcuts ─── */
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+
+    .tag-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.5);
+      font-size: 11px;
+      font-family: inherit;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: border-color .12s, color .12s, background .12s;
+    }
+    .tag-btn:hover {
+      border-color: rgba(255,255,255,.4);
+      color: #fff;
+    }
+    .tag-btn.active {
+      border-color: #fff;
+      color: #fff;
+      background: rgba(255,255,255,.08);
+    }
+
+    /* ─── Project rows ─── */
+    .project-list { margin-bottom: 32px; }
+
+    .proj-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      cursor: pointer;
+      user-select: none;
+    }
+    .proj-row:first-child { border-top: 1px solid rgba(255,255,255,.06); }
+    .proj-row:hover { background: rgba(255,255,255,.02); margin: 0 -8px; padding-left: 8px; padding-right: 8px; }
+
+    .proj-check {
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(255,255,255,.25);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .12s, background .12s;
+    }
+    .proj-check.checked {
+      border-color: #fff;
+      background: #fff;
+    }
+    .proj-check.checked::after {
+      content: '';
+      width: 8px;
+      height: 5px;
+      border-left: 1.5px solid #000;
+      border-bottom: 1.5px solid #000;
+      transform: translateY(-1px) rotate(-45deg);
+      display: block;
+    }
+
+    .proj-info { flex: 1; min-width: 0; }
+    .proj-name { font-weight: 600; font-size: 13px; }
+    .proj-venue { font-size: 12px; color: rgba(255,255,255,.38); margin-top: 1px; }
+
+    .proj-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .proj-tag {
+      font-size: 10px;
+      color: rgba(255,255,255,.3);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 2px 7px;
+    }
+
+    /* ─── Controls row ─── */
+    .controls-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .ctrl-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.4);
+      font-size: 11px;
+      font-family: inherit;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: color .12s, border-color .12s;
+    }
+    .ctrl-btn:hover { color: #fff; border-color: rgba(255,255,255,.35); }
+
+    /* ─── URL output ─── */
+    .url-section { margin-bottom: 36px; }
+
+    .url-row {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+
+    .url-input {
+      flex: 1;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.6);
+      font-size: 11px;
+      font-family: inherit;
+      padding: 8px 10px;
+      outline: none;
+      min-width: 0;
+    }
+    .url-input:focus { border-color: rgba(255,255,255,.3); color: #fff; }
+
+    .action-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+      font-family: inherit;
+      padding: 8px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color .12s, color .12s, background .12s;
+      flex-shrink: 0;
+    }
+    .action-btn:hover {
+      border-color: rgba(255,255,255,.55);
+      color: #fff;
+      background: rgba(255,255,255,.04);
+    }
+    .action-btn.primary {
+      border-color: rgba(255,255,255,.35);
+      color: #fff;
+    }
+    .action-btn.copied {
+      border-color: #6fcf97;
+      color: #6fcf97;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .label-hint { font-size: 11px; color: rgba(255,255,255,.25); }
+    .label-input {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.7);
+      font-size: 12px;
+      font-family: inherit;
+      padding: 5px 8px;
+      outline: none;
+      width: 220px;
+      transition: border-color .12s, color .12s;
+    }
+    .label-input::placeholder { color: rgba(255,255,255,.2); }
+    .label-input:focus { border-bottom-color: rgba(255,255,255,.5); color: #fff; }
+
+    .save-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.4);
+      font-size: 11px;
+      font-family: inherit;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: color .12s, border-color .12s;
+    }
+    .save-btn:hover { color: #fff; border-color: rgba(255,255,255,.4); }
+
+    /* ─── Saved versions ─── */
+    .saved-section { margin-top: 8px; }
+
+    .saved-empty {
+      font-size: 12px;
+      color: rgba(255,255,255,.2);
+      padding: 16px 0;
+    }
+
+    .saved-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .saved-item:first-child { border-top: 1px solid rgba(255,255,255,.06); }
+
+    .saved-label {
+      font-size: 13px;
+      font-weight: 500;
+      flex: 1;
+      min-width: 0;
+    }
+    .saved-meta {
+      font-size: 11px;
+      color: rgba(255,255,255,.28);
+    }
+    .saved-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .saved-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.35);
+      font-size: 11px;
+      font-family: inherit;
+      padding: 3px 9px;
+      cursor: pointer;
+      transition: color .12s, border-color .12s;
+    }
+    .saved-btn:hover { color: #fff; border-color: rgba(255,255,255,.35); }
+    .saved-btn.del:hover { color: #eb5757; border-color: #eb5757; }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,.06);
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header class="hd">
+  <span class="hd-title">Martin Nayeri <span>— Portfolio Builder</span></span>
+  <a href="index.html" class="hd-back">← View portfolio</a>
+</header>
+
+<!-- Tag shortcuts -->
+<p class="section-label">Filter by tag</p>
+<div class="tags-row" id="tags-row"></div>
+
+<!-- Bulk controls -->
+<div class="controls-row">
+  <button class="ctrl-btn" id="btn-all">Select all</button>
+  <button class="ctrl-btn" id="btn-none">Deselect all</button>
+</div>
+
+<!-- Project list -->
+<p class="section-label">Projects</p>
+<div class="project-list" id="project-list"></div>
+
+<hr class="divider">
+
+<!-- URL generator -->
+<div class="url-section">
+  <p class="section-label">Generated link</p>
+  <div class="url-row">
+    <input type="text" class="url-input" id="url-output" readonly>
+    <button class="action-btn primary" id="btn-copy">Copy</button>
+    <button class="action-btn" id="btn-preview">Open preview ↗</button>
+  </div>
+  <div class="label-row">
+    <span class="label-hint">Label (for your reference):</span>
+    <input type="text" class="label-input" id="label-input" placeholder="e.g. UX role @ Google">
+    <button class="save-btn" id="btn-save">Save version</button>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- Saved versions -->
+<p class="section-label">Saved versions</p>
+<div class="saved-section" id="saved-list"></div>
+
+<script src="data.js"></script>
+<script>
+const STORAGE_KEY = 'mn_portfolio_links';
+
+// ─── State ───
+const checked = new Set(PROJECTS.map(p => p.slug)); // all checked by default
+
+// ─── Collect all tags ───
+const allTags = [...new Set(PROJECTS.flatMap(p => p.tags))].sort();
+
+// ─── Build URL ───
+function buildURL() {
+  const slugs = PROJECTS.filter(p => checked.has(p.slug)).map(p => p.slug);
+  if (slugs.length === 0) return 'index.html';
+  if (slugs.length === PROJECTS.length) return 'index.html';
+  return `index.html?show=${slugs.join(',')}`;
+}
+
+// ─── Render tag buttons ───
+function renderTags() {
+  const row = document.getElementById('tags-row');
+  row.innerHTML = allTags.map(tag => `
+    <button class="tag-btn" data-tag="${tag}">${tag}</button>
+  `).join('');
+
+  row.querySelectorAll('.tag-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const tag = this.dataset.tag;
+      const withTag = PROJECTS.filter(p => p.tags.includes(tag)).map(p => p.slug);
+      // If all projects with this tag are already checked, treat as toggle-off; otherwise select them
+      const allOn = withTag.every(s => checked.has(s)) && [...checked].every(s => withTag.includes(s));
+      if (allOn) {
+        // select all
+        PROJECTS.forEach(p => checked.add(p.slug));
+      } else {
+        // select only this tag's projects
+        checked.clear();
+        withTag.forEach(s => checked.add(s));
+      }
+      renderList();
+      syncURL();
+      updateTagHighlights();
+    });
+  });
+}
+
+function updateTagHighlights() {
+  document.querySelectorAll('.tag-btn').forEach(btn => {
+    const tag = btn.dataset.tag;
+    const withTag = PROJECTS.filter(p => p.tags.includes(tag)).map(p => p.slug);
+    const active = withTag.every(s => checked.has(s)) && [...checked].every(s => withTag.includes(s));
+    btn.classList.toggle('active', active);
+  });
+}
+
+// ─── Render project list ───
+function renderList() {
+  const list = document.getElementById('project-list');
+  list.innerHTML = PROJECTS.map(p => `
+    <div class="proj-row" data-slug="${p.slug}">
+      <div class="proj-check${checked.has(p.slug) ? ' checked' : ''}"></div>
+      <div class="proj-info">
+        <div class="proj-name">${p.title}</div>
+        <div class="proj-venue">${p.role}</div>
+      </div>
+      <div class="proj-tags">
+        ${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.proj-row').forEach(row => {
+    row.addEventListener('click', function () {
+      const slug = this.dataset.slug;
+      if (checked.has(slug)) checked.delete(slug);
+      else checked.add(slug);
+      renderList();
+      syncURL();
+      updateTagHighlights();
+    });
+  });
+}
+
+// ─── Sync URL output ───
+function syncURL() {
+  document.getElementById('url-output').value = buildURL();
+}
+
+// ─── Select all / none ───
+document.getElementById('btn-all').addEventListener('click', () => {
+  PROJECTS.forEach(p => checked.add(p.slug));
+  renderList(); syncURL(); updateTagHighlights();
+});
+document.getElementById('btn-none').addEventListener('click', () => {
+  checked.clear();
+  renderList(); syncURL(); updateTagHighlights();
+});
+
+// ─── Copy ───
+document.getElementById('btn-copy').addEventListener('click', function () {
+  const url = document.getElementById('url-output').value;
+  navigator.clipboard.writeText(url).then(() => {
+    this.textContent = 'Copied ✓';
+    this.classList.add('copied');
+    setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 1800);
+  }).catch(() => {
+    // fallback for file:// contexts
+    const el = document.getElementById('url-output');
+    el.select();
+    document.execCommand('copy');
+    this.textContent = 'Copied ✓';
+    this.classList.add('copied');
+    setTimeout(() => { this.textContent = 'Copy'; this.classList.remove('copied'); }, 1800);
+  });
+});
+
+// ─── Open preview ───
+document.getElementById('btn-preview').addEventListener('click', () => {
+  window.open(buildURL(), '_blank');
+});
+
+// ─── Save version ───
+document.getElementById('btn-save').addEventListener('click', () => {
+  const label = document.getElementById('label-input').value.trim() || 'Untitled';
+  const url = buildURL();
+  const slugs = PROJECTS.filter(p => checked.has(p.slug)).map(p => p.slug);
+  const versions = loadVersions();
+  versions.unshift({
+    id: Date.now(),
+    label,
+    url,
+    slugs,
+    created: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  });
+  saveVersions(versions);
+  document.getElementById('label-input').value = '';
+  renderSaved();
+});
+
+// ─── localStorage ───
+function loadVersions() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+function saveVersions(v) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(v));
+}
+
+// ─── Render saved ───
+function renderSaved() {
+  const versions = loadVersions();
+  const el = document.getElementById('saved-list');
+  if (versions.length === 0) {
+    el.innerHTML = '<p class="saved-empty">No saved versions yet.</p>';
+    return;
+  }
+  el.innerHTML = versions.map(v => {
+    const projectNames = (v.slugs || [])
+      .map(s => PROJECTS.find(p => p.slug === s)?.title)
+      .filter(Boolean)
+      .join(', ') || 'All projects';
+    return `
+<div class="saved-item" data-id="${v.id}">
+  <div class="saved-info" style="flex:1;min-width:0;">
+    <div class="saved-label">${v.label}</div>
+    <div class="saved-meta">${projectNames} &nbsp;·&nbsp; ${v.created}</div>
+  </div>
+  <div class="saved-actions">
+    <button class="saved-btn" data-action="copy" data-url="${v.url}">Copy</button>
+    <button class="saved-btn" data-action="load" data-slugs="${(v.slugs||[]).join(',')}">Load</button>
+    <button class="saved-btn del" data-action="delete">Delete</button>
+  </div>
+</div>`;
+  }).join('');
+
+  el.querySelectorAll('.saved-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const row = this.closest('.saved-item');
+      const id = Number(row.dataset.id);
+      const action = this.dataset.action;
+
+      if (action === 'copy') {
+        navigator.clipboard.writeText(this.dataset.url).catch(() => {});
+        this.textContent = 'Copied ✓';
+        setTimeout(() => { this.textContent = 'Copy'; }, 1800);
+      } else if (action === 'load') {
+        const slugs = this.dataset.slugs ? this.dataset.slugs.split(',') : [];
+        checked.clear();
+        slugs.forEach(s => checked.add(s));
+        renderList(); syncURL(); updateTagHighlights();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (action === 'delete') {
+        const updated = loadVersions().filter(v => v.id !== id);
+        saveVersions(updated);
+        renderSaved();
+      }
+    });
+  });
+}
+
+// ─── Init ───
+renderTags();
+renderList();
+syncURL();
+renderSaved();
+</script>
+</body>
+</html>
