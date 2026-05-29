@@ -28,7 +28,7 @@ const PROJECTS = [
     ],
   },
   {
-    slug: 'Netflix',
+    slug: 'netflix',
     title: 'Netflix',
     tags: ['campaign', 'interactive', 'ux'],
     role: 'Designer',
