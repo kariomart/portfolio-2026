@@ -7,22 +7,57 @@ const IMAGE_MANIFEST = {
       "poster": "images/qup/01-poster.png?v=1779312316585"
     },
     {
-      "src": "images/qup/02.webm?v=1779379557021"
+      "src": "images/qup/02.webm?v=1779398022612"
     },
     {
-      "src": "images/qup/03.webm?v=1779306348207",
-      "poster": "images/qup/03-poster.png?v=1779306663590"
+      "src": "images/qup/03.webm?v=1779379557021"
     },
     {
-      "src": "images/qup/04.webm?v=1779324788963",
-      "poster": "images/qup/04-poster.png?v=1779324868437"
+      "src": "images/qup/04.webm?v=1779306348207",
+      "poster": "images/qup/04-poster.png?v=1779306663590"
     },
     {
       "src": "images/qup/05.webm?v=1779380313380",
       "poster": "images/qup/05-poster.png?v=1779380419846"
+    },
+    {
+      "src": "images/qup/06.webm?v=1779324788963",
+      "poster": "images/qup/06-poster.png?v=1779324868437"
+    },
+    {
+      "src": "images/qup/07.webm?v=1779382953624",
+      "poster": "images/qup/07-poster.png?v=1779382942569"
+    },
+    {
+      "src": "images/qup/08.webm?v=1779383233755",
+      "poster": "images/qup/08-poster.png?v=1779383222389"
     }
   ],
-  "Netflix": [],
+  "Netflix": [
+    {
+      "src": "images/Netflix/01.webm?v=1780025629737",
+      "poster": "images/Netflix/01-poster.jpg?v=1780025447648"
+    },
+    {
+      "src": "images/Netflix/02.webm?v=1780022270114",
+      "poster": "images/Netflix/02-poster.jpg?v=1780022237564"
+    },
+    {
+      "src": "images/Netflix/03.webm?v=1780022472948",
+      "poster": "images/Netflix/03-poster.jpg?v=1780022461537"
+    },
+    {
+      "src": "images/Netflix/04.webm?v=1780025117154"
+    },
+    {
+      "src": "images/Netflix/05.webm?v=1780021292581",
+      "poster": "images/Netflix/05-poster.jpg?v=1780021505288"
+    },
+    {
+      "src": "images/Netflix/06.webm?v=1780025791669",
+      "poster": "images/Netflix/06-poster.jpg?v=1780025791682"
+    }
+  ],
   "SnowCity": [],
   "noclip": [
     "images/noclip/01.gif?v=1779175496561",

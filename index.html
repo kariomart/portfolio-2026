@@ -57,6 +57,7 @@
 
     .proj-hd {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 13px;
     }
@@ -136,8 +137,8 @@
     }
     .cap-tag {
       font-size: 11px;
-      color: rgba(255,255,255,.35);
-      border: 1px solid rgba(255,255,255,.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.5);
       padding: 1px 7px;
     }
 
@@ -261,15 +262,13 @@ container.innerHTML = visible.map((p, i) => {
     <div class="proj-label">
       <span class="title">${esc(p.title)}</span><span class="meta">,&nbsp;${esc(p.role)}</span>
     </div>
-  </div>
-  <div id="${id}" class="proj-desc">${esc(p.description)}</div>
-  <div class="img-strip">${buildImages(p)}</div>
-  <div class="proj-footer">
-    ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : '<div></div>'}
     <div class="cap-tags">
       ${(p.tags || []).map(t => `<span class="cap-tag">${esc(t)}</span>`).join('')}
     </div>
   </div>
+  <div id="${id}" class="proj-desc">${esc(p.description)}</div>
+  <div class="img-strip">${buildImages(p)}</div>
+  ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : ''}
 </section>`;
 }).join('');
 
