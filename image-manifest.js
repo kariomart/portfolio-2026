@@ -56,14 +56,43 @@ const IMAGE_MANIFEST = {
   ],
   "rewilding": [
     "images/rewilding/01.jpg?v=1780074321125",
-    "images/rewilding/02.jpg?v=1780074431027",
     {
-      "src": "images/rewilding/03.webm?v=1780074855975"
+      "src": "images/rewilding/02.webm?v=1780090850911"
+    },
+    "images/rewilding/03.jpg?v=1780074431027",
+    {
+      "src": "images/rewilding/04.webm?v=1780074855975"
     },
     {
-      "src": "images/rewilding/04.webm?v=1780074800793"
+      "src": "images/rewilding/05.webm?v=1780074800793"
     },
-    "images/rewilding/05.png?v=1780074407166"
+    "images/rewilding/06.png?v=1780074407166"
+  ],
+  "pokernight": [
+    "images/pokernight/01.jpg?v=1780090525182",
+    {
+      "src": "images/pokernight/02.webm?v=1780090380162"
+    },
+    "images/pokernight/03.png?v=1780089951385",
+    {
+      "src": "images/pokernight/04.webm?v=1780090304025"
+    }
+  ],
+  "chrono": [
+    {
+      "src": "images/chrono/01.webm?v=1780089628183"
+    },
+    "images/chrono/02.png?v=1737150364000",
+    "images/chrono/03.png?v=1737150364000",
+    "images/chrono/04.png?v=1737150364000",
+    "images/chrono/05.png?v=1737150364000",
+    "images/chrono/06.jpg?v=1737150372000"
+  ],
+  "multipuck": [
+    "images/multipuck/01.png?v=1737150362000",
+    "images/multipuck/02.png?v=1737150362000",
+    "images/multipuck/03.png?v=1737150362000",
+    "images/multipuck/04.png?v=1737150364000"
   ],
   "noclip": [
     {
@@ -91,12 +120,39 @@ const IMAGE_MANIFEST = {
       "poster": "images/noclip/06-poster.jpg?v=1780075867821"
     }
   ],
-  "SnowCity": [],
+  "snowcity": [
+    {
+      "src": "images/snowcity/01.webm?v=1780084225229"
+    },
+    {
+      "src": "images/snowcity/02.webm?v=1780084246152"
+    },
+    "images/snowcity/03.png?v=1660261618405",
+    {
+      "src": "images/snowcity/04.webm?v=1780084583687",
+      "poster": "images/snowcity/04-poster.jpg?v=1780084631375"
+    }
+  ],
+  "coach": [
+    {
+      "src": "images/coach/01.webm?v=1780085714030"
+    },
+    "images/coach/02.jpeg?v=1780084707806",
+    {
+      "src": "images/coach/03.webm?v=1780086641504"
+    },
+    "images/coach/04.png?v=1608085976980",
+    {
+      "src": "images/coach/05.webm?v=1780086081859"
+    }
+  ],
   "linkedin": [
-    "images/linkedin/Data-Communities-at-LinkedIn-2.jpg?v=1737150360000",
-    "images/linkedin/Data-Communities-at-LinkedIn-3.jpg?v=1737150360000",
-    "images/linkedin/Data-Communities-at-LinkedIn-4.jpg?v=1737150360000",
-    "images/linkedin/Data-Communities-at-LinkedIn-6.jpg?v=1737150360000"
+    {
+      "src": "images/linkedin/01.webm?v=1780080400222"
+    },
+    "images/linkedin/02.jpg?v=1737150360000",
+    "images/linkedin/03.jpg?v=1737150360000",
+    "images/linkedin/04.jpg?v=1737150360000"
   ],
   "megaware": [
     "images/megaware/01.jpg?v=1780075128872",
