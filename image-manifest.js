@@ -67,7 +67,7 @@ const IMAGE_MANIFEST = {
   ],
   "noclip": [
     {
-      "src": "images/noclip/01.webm?v=1780075579421",
+      "src": "images/noclip/01.webm?v=1780081766728",
       "poster": "images/noclip/01-poster.jpg?v=1780075867820"
     },
     {
@@ -92,10 +92,11 @@ const IMAGE_MANIFEST = {
     }
   ],
   "SnowCity": [],
-  "LinkedIn": [
-    {
-      "src": "images/LinkedIn/01.webm?v=1780080400222"
-    }
+  "linkedin": [
+    "images/linkedin/Data-Communities-at-LinkedIn-2.jpg?v=1737150360000",
+    "images/linkedin/Data-Communities-at-LinkedIn-3.jpg?v=1737150360000",
+    "images/linkedin/Data-Communities-at-LinkedIn-4.jpg?v=1737150360000",
+    "images/linkedin/Data-Communities-at-LinkedIn-6.jpg?v=1737150360000"
   ],
   "megaware": [
     "images/megaware/01.jpg?v=1780075128872",

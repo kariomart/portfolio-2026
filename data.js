@@ -69,7 +69,7 @@ const PROJECTS = [
     images: 4,
   },
   {
-    slug: 'LinkedIn',
+    slug: 'linkedin',
     title: 'LinkedIn Data Communities',
     tags: ['editorial', 'ux'],
     role: 'Sponsored',
