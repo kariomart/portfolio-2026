@@ -84,15 +84,123 @@
     .btn-plus:hover,
     .btn-plus.open { color: #fff; }
 
-    /* ─── Description (hidden by default) ─── */
-    .proj-desc {
-      max-width: 560px;
-      line-height: 1.65;
-      color: rgba(255,255,255,.72);
-      margin-bottom: 14px;
-      display: none;
+    /* ─── Modal ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.52);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      overflow-y: auto;
+      padding: 48px 36px 80px;
     }
-    .proj-desc.show { display: block; }
+    .modal-overlay.hidden { display: none; }
+
+    @keyframes modal-drop {
+      from { opacity: 0; transform: translateY(-28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes modal-rise {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-28px); }
+    }
+
+    .modal {
+      background: #818787;
+      max-width: 1060px;
+      width: 100%;
+      padding: 20px 36px 36px;
+      position: relative;
+    }
+
+    .modal.entering { animation: modal-drop .22s ease forwards; }
+    .modal.leaving  { animation: modal-rise .11s ease forwards; }
+
+    .modal-close {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.4);
+      background: none;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color .12s;
+      font-family: inherit;
+      padding: 0;
+    }
+    .modal-close:hover { border-color: #fff; }
+
+    .modal-titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .modal-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 40px;
+      margin-bottom: 28px;
+    }
+
+    .modal-client,
+    .modal-year {
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      line-height: 1.8;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255,255,255,.8);
+    }
+
+    .modal-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .modal-img-wrap {
+      flex-shrink: 0;
+      width: calc(50% - 4px);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .modal-img-wrap img,
+    .modal-img-wrap video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: #111;
+    }
+
+    .modal-img-cap {
+      font-size: 11px;
+      color: rgba(255,255,255,.45);
+      line-height: 1.5;
+    }
 
     /* ─── Image strip (horizontal scroll) ─── */
     .img-strip {
@@ -210,6 +318,23 @@
   <a href="#" class="btn-resume">Download Resume</a>
 </footer>
 
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-titlebar">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+    <div class="modal-top">
+      <div class="modal-left">
+        <div class="modal-client" id="modal-client"></div>
+        <div class="modal-year" id="modal-year"></div>
+      </div>
+      <div class="modal-desc" id="modal-desc"></div>
+    </div>
+    <div class="modal-images" id="modal-images"></div>
+  </div>
+</div>
+
 <script src="data.js"></script>
 <script src="image-manifest.js"></script>
 <script>
@@ -253,11 +378,9 @@ if (isFiltered) {
 
 // ─── Render ───
 const container = document.getElementById('projects');
-container.innerHTML = visible.map((p, i) => {
-  const id = `pd-${i}`;
-  return `
+container.innerHTML = visible.map(p => `
 <section class="project">
-  <button class="btn-plus" data-id="${id}">+</button>
+  <button class="btn-plus" data-slug="${p.slug}">+</button>
   <div class="proj-hd">
     <div class="proj-label">
       <span class="title">${esc(p.title)}</span><span class="meta">,&nbsp;${esc(p.role)}</span>
@@ -266,18 +389,14 @@ container.innerHTML = visible.map((p, i) => {
       ${(p.tags || []).map(t => `<span class="cap-tag">${esc(t)}</span>`).join('')}
     </div>
   </div>
-  <div id="${id}" class="proj-desc">${esc(p.description)}</div>
   <div class="img-strip">${buildImages(p)}</div>
   ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : ''}
-</section>`;
-}).join('');
+</section>`).join('');
 
 document.querySelectorAll('.btn-plus').forEach(btn => {
   btn.addEventListener('click', function () {
-    const desc = document.getElementById(this.dataset.id);
-    const open = desc.classList.toggle('show');
-    this.classList.toggle('open', open);
-    this.textContent = open ? '×' : '+';
+    const p = visible.find(proj => proj.slug === this.dataset.slug);
+    if (p) openModal(p);
   });
 });
 
@@ -318,6 +437,64 @@ document.querySelectorAll('.img-strip video').forEach(video => {
   video.addEventListener('mouseleave', () => { video.pause(); });
 });
 
+// ─── Modal ───
+function buildModalImages(p) {
+  const paths    = (typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[p.slug]) || [];
+  const captions = p.captions || [];
+  return paths.map((item, i) => {
+    const src    = typeof item === 'string' ? item : item.src;
+    const poster = typeof item === 'object' && item.poster ? item.poster : '';
+    const ext    = src.split('?')[0].toLowerCase();
+    const cap    = captions[i] || '';
+    const media  = ext.endsWith('.webm')
+      ? `<video src="${src}"${poster ? ` poster="${poster}"` : ''} loop muted playsinline preload="auto"></video>`
+      : `<img src="${src}" alt="" loading="lazy">`;
+    return `<div class="modal-img-wrap">${media}${cap ? `<div class="modal-img-cap">${esc(cap)}</div>` : ''}</div>`;
+  }).join('');
+}
+
+function openModal(p) {
+  document.getElementById('modal-title').textContent  = p.title;
+  document.getElementById('modal-client').textContent = p.client || '';
+  document.getElementById('modal-year').textContent   = p.year   || '';
+  document.getElementById('modal-desc').textContent   = p.description || '';
+  document.getElementById('modal-images').innerHTML   = buildModalImages(p);
+
+  const overlay = document.getElementById('modal-overlay');
+  const modal   = document.getElementById('modal');
+  overlay.classList.remove('hidden');
+  modal.classList.remove('leaving');
+  void modal.offsetWidth;
+  modal.classList.add('entering');
+
+  document.body.style.overflow = 'hidden';
+  document.querySelectorAll('#modal-images video').forEach(v => {
+    v.addEventListener('mouseenter', () => v.play());
+    v.addEventListener('mouseleave', () => v.pause());
+  });
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modal-overlay');
+  const modal   = document.getElementById('modal');
+  modal.classList.remove('entering');
+  void modal.offsetWidth;
+  modal.classList.add('leaving');
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    modal.classList.remove('leaving');
+    document.body.style.overflow = '';
+    document.querySelectorAll('#modal-images video').forEach(v => v.pause());
+  }, 110);
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
 </script>
+
 </body>
 </html>

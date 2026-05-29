@@ -50,19 +50,57 @@ const IMAGE_MANIFEST = {
       "src": "images/netflix/04.webm?v=1780025117154"
     },
     {
-      "src": "images/netflix/05.webm?v=1780021292581",
-      "poster": "images/netflix/05-poster.jpg?v=1780021505288"
-    },
-    {
       "src": "images/netflix/06.webm?v=1780025791669",
       "poster": "images/netflix/06-poster.jpg?v=1780025791682"
     }
   ],
-  "SnowCity": [],
-  "noclip": [
-    "images/noclip/01.gif?v=1779175496561",
-    "images/noclip/02.gif?v=1779175588703",
-    "images/noclip/03.gif?v=1779175643835"
+  "rewilding": [
+    "images/rewilding/01.jpg?v=1780074321125",
+    "images/rewilding/02.jpg?v=1780074431027",
+    {
+      "src": "images/rewilding/03.webm?v=1780074855975"
+    },
+    {
+      "src": "images/rewilding/04.webm?v=1780074800793"
+    },
+    "images/rewilding/05.png?v=1780074407166"
   ],
-  "LinkedIn": []
+  "noclip": [
+    {
+      "src": "images/noclip/01.webm?v=1780075579421",
+      "poster": "images/noclip/01-poster.jpg?v=1780075867820"
+    },
+    {
+      "src": "images/noclip/02.webm?v=1780075579333",
+      "poster": "images/noclip/02-poster.jpg?v=1780075867815"
+    },
+    {
+      "src": "images/noclip/03.webm?v=1780075579326",
+      "poster": "images/noclip/03-poster.jpg?v=1780075867813"
+    },
+    {
+      "src": "images/noclip/04.webm?v=1780075579426",
+      "poster": "images/noclip/04-poster.jpg?v=1780075867820"
+    },
+    {
+      "src": "images/noclip/05.webm?v=1780075579318",
+      "poster": "images/noclip/05-poster.jpg?v=1780075867815"
+    },
+    {
+      "src": "images/noclip/06.webm?v=1780075579430",
+      "poster": "images/noclip/06-poster.jpg?v=1780075867821"
+    }
+  ],
+  "SnowCity": [],
+  "LinkedIn": [
+    {
+      "src": "images/LinkedIn/01.webm?v=1780080400222"
+    }
+  ],
+  "megaware": [
+    "images/megaware/01.jpg?v=1780075128872",
+    "images/megaware/02.jpg?v=1780075156088",
+    "images/megaware/03.jpg?v=1780075144989",
+    "images/megaware/04.jpg?v=1780075182225"
+  ]
 };

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martin Nayeri</title>
+  <style>
+    @font-face {
+      font-family: 'Mercator';
+      src: url('fonts/MercatorST_Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: #818787;
+      color: #fff;
+      font-family: 'Mercator', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Header ─── */
+    header {
+      display: flex;
+      align-items: baseline;
+      gap: 40px;
+      padding: 28px 36px 24px;
+    }
+
+    .site-name { font-weight: 400; }
+
+    .categories {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.35);
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 0;
+      transition: color .12s;
+    }
+    .cat-btn:hover { color: rgba(255,255,255,.7); }
+    .cat-btn.active { color: #fff; }
+
+    /* ─── Main ─── */
+    .main {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      overflow: hidden;
+    }
+
+    /* ─── Left: project list ─── */
+    .proj-list {
+      padding: 4px 0 40px 36px;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .proj-list::-webkit-scrollbar { display: none; }
+
+    .proj-item {
+      font-size: 13px;
+      color: rgba(255,255,255,.38);
+      padding: 3px 0;
+      cursor: default;
+      transition: color .12s;
+      user-select: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .proj-item.active { color: #fff; }
+
+    /* ─── Right: scatter area ─── */
+    .scatter {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scatter img {
+      position: absolute;
+      object-fit: cover;
+      pointer-events: none;
+      transition: opacity .18s ease;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="site-name">Martin Nayeri</a>
+  <nav class="categories" id="categories"></nav>
+</header>
+
+<div class="main">
+  <div class="proj-list" id="proj-list"></div>
+  <div class="scatter" id="scatter"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="image-manifest.js"></script>
+<script>
+
+// ─── Edit this to control category order and which ones appear ───────────────
+const CATEGORY_ORDER = ['game', 'ux', 'branding', 'interactive', 'campaign', 'editorial', 'installation'];
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Build ordered, deduplicated tag list
+const allTags = [...new Set(PROJECTS.flatMap(p => p.tags || []))];
+const orderedTags = [
+  ...CATEGORY_ORDER.filter(t => allTags.includes(t)),
+  ...allTags.filter(t => !CATEGORY_ORDER.includes(t)).sort(),
+];
+
+let activeCategory = 'all';
+
+// ─── Render categories ───
+const catEl = document.getElementById('categories');
+catEl.innerHTML = ['all', ...orderedTags].map(c =>
+  `<button class="cat-btn${c === 'all' ? ' active' : ''}" data-cat="${c}">${c}</button>`
+).join('');
+
+catEl.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    activeCategory = this.dataset.cat;
+    catEl.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b === this));
+    renderList();
+    clearScatter();
+  });
+});
+
+// ─── Render project list ───
+function getFiltered() {
+  if (activeCategory === 'all') return PROJECTS;
+  return PROJECTS.filter(p => (p.tags || []).includes(activeCategory));
+}
+
+function renderList() {
+  const list = document.getElementById('proj-list');
+  list.innerHTML = getFiltered().map(p =>
+    `<div class="proj-item" data-slug="${p.slug}">${p.title}</div>`
+  ).join('');
+
+  list.querySelectorAll('.proj-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      list.querySelectorAll('.proj-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      scatter(item.dataset.slug);
+    });
+  });
+
+  list.addEventListener('mouseleave', () => {
+    list.querySelectorAll('.proj-item').forEach(i => i.classList.remove('active'));
+    clearScatter();
+  });
+}
+
+// ─── Image sources for a slug ───
+function getSrcs(slug) {
+  const items = (typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[slug]) || [];
+  return items.map(item => {
+    if (typeof item === 'string') return item.split('?')[0];
+    if (item.poster) return item.poster.split('?')[0];
+    return null;
+  }).filter(Boolean);
+}
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+// ─── Scatter ───
+function clearScatter() {
+  document.querySelectorAll('.scatter img').forEach(img => {
+    img.style.opacity = '0';
+    setTimeout(() => img.remove(), 200);
+  });
+}
+
+function scatter(slug) {
+  clearScatter();
+
+  const srcs = shuffle(getSrcs(slug));
+  if (!srcs.length) return;
+
+  const area  = document.getElementById('scatter');
+  const aW    = area.clientWidth;
+  const aH    = area.clientHeight;
+  const count = Math.min(srcs.length, 5);
+
+  srcs.slice(0, count).forEach((src, i) => {
+    const img = document.createElement('img');
+    const w   = aW * (0.2 + Math.random() * 0.2);
+    const h   = w * (9 / 16);
+    const x   = Math.random() * Math.max(aW - w, 0);
+    const y   = Math.random() * Math.max(aH - h, 0);
+    const rot = (Math.random() - 0.5) * 16;
+
+    img.src = src;
+    img.style.cssText = `width:${w}px;height:${h}px;left:${x}px;top:${y}px;transform:rotate(${rot}deg);z-index:${i + 1};opacity:0;`;
+    area.appendChild(img);
+    setTimeout(() => { img.style.opacity = '1'; }, i * 50);
+  });
+}
+
+renderList();
+</script>
+</body>
+</html>
