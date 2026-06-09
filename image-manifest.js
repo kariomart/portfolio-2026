@@ -153,10 +153,12 @@ const IMAGE_MANIFEST = {
   "snowcity": {
     "strip": [
       {
-        "src": "images/snowcity/01.webm?v=1780084225229"
+        "src": "images/snowcity/01.webm?v=1780084225229",
+        "poster": "images/snowcity/01-poster.png?v=1781039915869"
       },
       {
-        "src": "images/snowcity/02.webm?v=1780084246152"
+        "src": "images/snowcity/02.webm?v=1780084246152",
+        "poster": "images/snowcity/02-poster.png?v=1781039931507"
       },
       "images/snowcity/03.png?v=1660261618405",
       {
@@ -169,11 +171,13 @@ const IMAGE_MANIFEST = {
   "coach": {
     "strip": [
       {
-        "src": "images/coach/01.webm?v=1780085714030"
+        "src": "images/coach/01.webm?v=1780085714030",
+        "poster": "images/coach/01-poster.png?v=1781040004972"
       },
       "images/coach/02.jpeg?v=1780084707806",
       {
-        "src": "images/coach/03.webm?v=1780086641504"
+        "src": "images/coach/03.webm?v=1780086641504",
+        "poster": "images/coach/03-poster.png?v=1781040037914"
       },
       "images/coach/04.png?v=1608085976980",
       {
@@ -185,7 +189,8 @@ const IMAGE_MANIFEST = {
   "linkedin": {
     "strip": [
       {
-        "src": "images/linkedin/01.webm?v=1780080400222"
+        "src": "images/linkedin/01.webm?v=1780080400222",
+        "poster": "images/linkedin/01-poster.png?v=1781040180407"
       },
       "images/linkedin/02.jpg?v=1737150360000",
       "images/linkedin/03.jpg?v=1737150360000",
