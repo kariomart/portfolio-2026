@@ -338,14 +338,17 @@
     /* ─── Responsive ─── */
     @media (max-width: 640px) {
       body { padding: 20px 18px 60px; }
-      .hd { flex-direction: column; gap: 6px; }
+      .hd { flex-direction: row; }
       .proj-cap { grid-template-columns: 1fr; gap: 10px; }
       .img-grid.c4 { grid-template-columns: repeat(2, 1fr); }
       .img-grid.c3 { grid-template-columns: repeat(2, 1fr); }
       .cap-tags { display: none; }
+      .btn-plus { display: none; }
       .img-strip img,
       .img-strip video,
       .img-slot { width: 90%; }
+      .lightbox-overlay img,
+      .lightbox-overlay video { max-width: 95%; max-height: 75vh; }
     }
   </style>
 </head>
@@ -396,6 +399,16 @@
 <script src="data.js"></script>
 <script src="image-manifest.js"></script>
 <script>
+(function preloadPosters() {
+  if (typeof IMAGE_MANIFEST === 'undefined') return;
+  Object.values(IMAGE_MANIFEST).forEach(entry => {
+    const items = Array.isArray(entry) ? entry : [...(entry.strip || []), ...(entry.modal || [])];
+    items.forEach(item => {
+      if (item && typeof item === 'object' && item.poster) { const i = new Image(); i.src = item.poster; }
+    });
+  });
+})();
+
 function getManifest(slug) {
   const entry = typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[slug];
   if (!entry) return { strip: [], modal: [] };
@@ -616,6 +629,16 @@ function closeLightbox() {
 document.getElementById('lightbox-overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('lightbox-overlay')) closeLightbox();
 });
+
+(function () {
+  let touchStartX = 0;
+  const lbOverlay = document.getElementById('lightbox-overlay');
+  lbOverlay.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  lbOverlay.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) lightboxNav(dx < 0 ? 1 : -1);
+  });
+})();
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
 document.getElementById('modal-overlay').addEventListener('click', e => {
