@@ -8,6 +8,7 @@
 // description: shown in the project modal (right column)
 // images:      number = cap on how many images from image-manifest.js to show
 // captions:    optional array of strings, one per image in order (empty string = no caption)
+// modal:       set to false to disable the modal for this project (default: true)
 // ─────────────────────────────────────────────────────────────────────────────
 
 const PROJECTS = [
@@ -45,6 +46,7 @@ const PROJECTS = [
     description: "a meditative ecology game about regrowing a forest as a means of reckoning with climate change and its effects.",
     quote: '',
     images: 6,
+    modal: false,
   },
   {
     slug: 'pokernight',
@@ -56,6 +58,7 @@ const PROJECTS = [
     description: "a meditative ecology game about regrowing a forest as a means of reckoning with climate change and its effects.",
     quote: '',
     images: 6,
+    modal: false,
   },
   {
     slug: 'chrono',
@@ -67,6 +70,7 @@ const PROJECTS = [
     description: "a meditative ecology game about regrowing a forest as a means of reckoning with climate change and its effects.",
     quote: '',
     images: 6,
+    modal: false,
   },
   {
     slug: 'multipuck',
@@ -78,6 +82,7 @@ const PROJECTS = [
     description: "a meditative ecology game about regrowing a forest as a means of reckoning with climate change and its effects.",
     quote: '',
     images: 5,
+    modal: false,
   },
   {
     slug: 'noclip',

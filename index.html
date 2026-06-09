@@ -83,6 +83,7 @@
       margin-bottom: 13px;
       cursor: pointer;
     }
+    .proj-hd.no-modal { cursor: default; }
 
     .proj-label { font-size: 13px; }
     .proj-label .title { font-weight: 700; }
@@ -465,10 +466,12 @@ if (isFiltered) {
 
 // ─── Render ───
 const container = document.getElementById('projects');
-container.innerHTML = visible.map(p => `
+container.innerHTML = visible.map(p => {
+  const hasModal = p.modal !== false;
+  return `
 <section class="project">
-  <button class="btn-plus" data-slug="${p.slug}">+</button>
-  <div class="proj-hd" data-slug="${p.slug}">
+  ${hasModal ? `<button class="btn-plus" data-slug="${p.slug}">+</button>` : ''}
+  <div class="proj-hd${hasModal ? '' : ' no-modal'}" data-slug="${p.slug}">
     <div class="proj-label">
       <span class="title">${esc(p.title)}</span><span class="meta">,&nbsp;${esc(p.role)}</span>
     </div>
@@ -478,13 +481,14 @@ container.innerHTML = visible.map(p => `
   </div>
   <div class="img-strip">${buildImages(p)}</div>
   ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : ''}
-</section>`).join('');
+</section>`;
+}).join('');
 
 container.querySelectorAll('.project').forEach((el, i) => {
   el.style.animationDelay = `${0.35 + i * 0.1}s`;
 });
 
-document.querySelectorAll('.btn-plus, .proj-hd').forEach(el => {
+document.querySelectorAll('.btn-plus, .proj-hd:not(.no-modal)').forEach(el => {
   el.addEventListener('click', function () {
     const p = visible.find(proj => proj.slug === this.dataset.slug);
     if (p) openModal(p);
