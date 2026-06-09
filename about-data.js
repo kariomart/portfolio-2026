@@ -4,22 +4,22 @@
 
 const ABOUT = {
 
-  // Left column — one or more paragraphs
+  // Left column — one or more paragraphs (HTML allowed)
   bio: [
-    "Martin Nayeri is a designer who blends a deep knowledge of UX and a passion for games to create digital experiences that people love.",
-    "His work has been featured in Wired, used in a Coach campaign, sponsored by Adobe, and displayed at Death by Audio Arcade in Brooklyn.",
+    'Martin Nayeri is a designer who blends a deep knowledge of UX and a passion for games to create digital experiences that people love.',
+    'His work has been <a href="https://www.nytimes.com/2025/12/29/arts/q-up-esports-frank-lantz.html" target="_blank" rel="noopener">featured in the New York Times</a>, used in <a href="https://www.youtube.com/watch?v=JL9ZgAWeDWg" target="_blank" rel="noopener">many a Coach campaign</a>, <a href="https://open.spotify.com/show/6YIm23KPwxoWDpcnlwGwLP?si=16e13a8000c94ed1" target="_blank" rel="noopener">sponsored by Adobe</a>, and displayed at his <a href="https://www.deathbyaudioarcade.com/wondercab" target="_blank" rel="noopener">favorite bar</a> in Brooklyn.',
   ],
 
   // Left column — honors/recognition below the bio
   honors: [
-    { text: 'Q-UP in the NYT' },
-    { text: 'Q-UP in Rock Paper Shotgun' },
-    { text: 'Q-UP in Aftermath' },
-    { text: 'Q-UP in CanardPC' },
-    { text: 'Rewilding in Wired' },
-    { text: 'Windowswear Award' },
-    { text: 'NYU Incubator Awardee' },
-    { text: 'Wondercab at Wonderville' },
+    { text: 'Q-UP in the NYT',          href: 'https://www.nytimes.com/2025/12/29/arts/q-up-esports-frank-lantz.html' },
+    { text: 'Q-UP in Rock Paper Shotgun', href: 'https://www.rockpapershotgun.com/q-up-is-a-coin-flipping-esports-game-that-prides-itself-on-its-fairness-that-might-be-gaslighting-me' },
+    { text: 'Q-UP in Aftermath',         href: 'https://aftermath.site/qup-esports-universal-paperclips/' },
+    { text: 'Q-UP in CanardPC',          href: 'https://www.canardpc.com/jeu-video/test-jeu-video/q-up/' },
+    { text: 'Rewilding in Wired',        href: 'https://www.wired.com/story/rewilding-climate-change-gig-work/' },
+    { text: 'Windowswear Award',         href: 'https://www.linkedin.com/posts/coach_we-are-proud-to-share-that-coach-won-four-activity-6899789636286447616-CIEI/' },
+    { text: 'NYU Incubator Awardee',     href: 'https://gamecenter.nyu.edu/about/incubator/' },
+    { text: 'Wondercab at Wonderville',  href: 'https://www.deathbyaudioarcade.com/wondercab' },
   ],
 
   // Right column sections — label + list of items

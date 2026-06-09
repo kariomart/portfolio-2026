@@ -52,10 +52,24 @@
     /* ─── Left: bio ─── */
     .bio p {
       font-size: 13px;
-      line-height: 1.65;
+      line-height: 1.45;
       color: rgba(255,255,255,.85);
     }
-    .bio p + p { margin-top: 16px; }
+    .bio p + p { margin-top: 12px; }
+
+    .bio a {
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,.3);
+      text-underline-offset: 3px;
+      transition: text-decoration-color .12s;
+    }
+    .bio a:hover { text-decoration-color: rgba(255,255,255,.8); }
+    .bio a::after {
+      content: '↗';
+      font-size: 0.75em;
+      display: inline-block;
+      margin-left: 3px;
+    }
 
     .bio .honors {
       margin-top: 32px;
@@ -77,7 +91,7 @@
 
     .info-list {
       list-style: none;
-      line-height: 1.9;
+      line-height: 1.4;
     }
 
     .info-list li { font-size: 13px; color: rgba(255,255,255,.75); }
@@ -87,6 +101,15 @@
       transition: color .12s;
     }
     .info-list a:hover { color: #fff; }
+    .info-list a::after {
+      content: '↗';
+      font-size: 0.75em;
+      display: inline-block;
+      margin-left: 3px;
+      opacity: 0.5;
+      transition: opacity .12s;
+    }
+    .info-list a:hover::after { opacity: 1; }
 
     /* ─── Responsive ─── */
     @media (max-width: 640px) {
@@ -134,7 +157,7 @@ const honorsHtml = ABOUT.honors && ABOUT.honors.length ? `
   </div>` : '';
 
 document.getElementById('bio').innerHTML =
-  ABOUT.bio.map(p => `<p>${esc(p)}</p>`).join('') + honorsHtml;
+  ABOUT.bio.map(p => `<p>${p}</p>`).join('') + honorsHtml;
 
 // Sections
 document.getElementById('info-right').innerHTML =
