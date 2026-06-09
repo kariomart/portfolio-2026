@@ -176,7 +176,8 @@ function renderList() {
 
 // ─── Image sources for a slug ───
 function getSrcs(slug) {
-  const items = (typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[slug]) || [];
+  const entry = typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[slug];
+  const items = !entry ? [] : Array.isArray(entry) ? entry : (entry.strip || []);
   return items.map(item => {
     if (typeof item === 'string') return item.split('?')[0];
     if (item.poster) return item.poster.split('?')[0];

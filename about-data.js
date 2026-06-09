@@ -12,9 +12,14 @@ const ABOUT = {
 
   // Left column — honors/recognition below the bio
   honors: [
-    { text: 'Placeholder Honor' },
-    { text: 'Placeholder Honor' },
-    { text: 'Placeholder Honor' },
+    { text: 'Q-UP in the NYT' },
+    { text: 'Q-UP in Rock Paper Shotgun' },
+    { text: 'Q-UP in Aftermath' },
+    { text: 'Q-UP in CanardPC' },
+    { text: 'Rewilding in Wired' },
+    { text: 'Windowswear Award' },
+    { text: 'NYU Incubator Awardee' },
+    { text: 'Wondercab at Wonderville' },
   ],
 
   // Right column sections — label + list of items
@@ -24,37 +29,44 @@ const ABOUT = {
       label: 'Contact',
       items: [
         { text: 'Email',     href: 'mailto:martin.nayeri@gmail.com' },
-        { text: 'Instagram', href: 'https://www.instagram.com/martinnayeri' },
         { text: 'LinkedIn',  href: 'https://www.linkedin.com/in/martinnayeri' },
+        { text: 'Instagram', href: 'https://www.instagram.com/martinnayeri' },
       ],
     },
     {
       label: 'Services',
       items: [
         { text: 'UX Design' },
-        { text: 'Game Design' },
         { text: 'Interactive Design' },
+        { text: 'Game Design' },
         { text: 'Art Direction' },
         { text: 'Branding' },
         { text: 'Web Design' },
+        { text: 'Creative Direction' },
+        { text: 'Graphic Design' },
         { text: 'Sound Design' },
+        { text: 'Composing' },
+        { text: 'Development' },
       ],
     },
     {
       label: 'Clients',
       items: [
-        { text: 'Adobe' },
+        { text: 'Netflix' },
         { text: 'Coach' },
-        { text: 'Wired' },
-        { text: 'Death by Audio Arcade' },
-      ],
-    },
-    {
-      label: 'Honors',
-      items: [
-        { text: 'Placeholder Honor' },
-        { text: 'Placeholder Honor' },
-        { text: 'Placeholder Honor' },
+        { text: 'Adobe' },
+        { text: 'LinkedIn' },
+        { text: 'KitchenAid' },
+        { text: 'noclip' },
+        { text: 'NYU' },
+        { text: 'RAIN' },
+        { text: 'Suffolk' },
+        { text: 'Wonderville' },
+        { text: 'Everybody House Games' },
+        { text: 'Fablevision' },
+        { text: 'Composite Global' },
+        { text: 'Composite Global' },
+
       ],
     },
     {

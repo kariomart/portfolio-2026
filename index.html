@@ -39,6 +39,20 @@
       margin-bottom: 76px;
     }
     .bio em { font-style: italic; }
+    .bio-br { display: block; margin-top: 0.6em; }
+    .bio a {
+      text-decoration: underline;
+      text-decoration-color: rgba(255,255,255,.3);
+      text-underline-offset: 3px;
+      transition: text-decoration-color .12s;
+    }
+    .bio a:hover { text-decoration-color: rgba(255,255,255,.8); }
+    .bio a::after {
+      content: '↗';
+      font-size: 0.75em;
+      display: inline-block;
+      margin-left: 3px;
+    }
 
     /* ─── Filtered view notice ─── */
     .filter-notice {
@@ -60,6 +74,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 13px;
+      cursor: pointer;
     }
 
     .proj-label { font-size: 13px; }
@@ -196,6 +211,8 @@
       background: #111;
     }
 
+    .modal-img-wrap.full { width: 100%; }
+
     .modal-img-cap {
       font-size: 11px;
       color: rgba(255,255,255,.45);
@@ -325,6 +342,10 @@
       .proj-cap { grid-template-columns: 1fr; gap: 10px; }
       .img-grid.c4 { grid-template-columns: repeat(2, 1fr); }
       .img-grid.c3 { grid-template-columns: repeat(2, 1fr); }
+      .cap-tags { display: none; }
+      .img-strip img,
+      .img-strip video,
+      .img-slot { width: 90%; }
     }
   </style>
 </head>
@@ -336,9 +357,7 @@
 </header>
 
 <p class="bio">
-  Martin Nayeri is a designer who blends a deep knowledge of UX and a passion for games to create
-  digital experiences that people love. His work has been featured in <em>Wired</em>, used in a
-  Coach campaign, sponsored by Adobe, and displayed at Death by Audio Arcade in Brooklyn.
+  Martin Nayeri is a designer who blends a deep knowledge of UX and a passion for games to create experiences that people love.<span class="bio-br"></span>His work has been <a href="https://www.nytimes.com/2025/12/29/arts/q-up-esports-frank-lantz.html" target="_blank" rel="noopener">featured in the New York Times</a>, used in <a href="https://www.youtube.com/watch?v=JL9ZgAWeDWg" target="_blank" rel="noopener">many a Coach campaign</a>, <a href="https://open.spotify.com/show/6YIm23KPwxoWDpcnlwGwLP?si=16e13a8000c94ed1" target="_blank" rel="noopener">sponsored by Adobe</a>, and displayed at his <a href="https://www.deathbyaudioarcade.com/wondercab" target="_blank" rel="noopener">favorite bar</a> in Brooklyn.
 </p>
 
 <p class="filter-notice" id="filter-notice">
@@ -377,10 +396,16 @@
 <script src="data.js"></script>
 <script src="image-manifest.js"></script>
 <script>
+function getManifest(slug) {
+  const entry = typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[slug];
+  if (!entry) return { strip: [], modal: [] };
+  if (Array.isArray(entry)) return { strip: entry, modal: [] }; // legacy fallback
+  return entry;
+}
+
 function buildImages(p) {
   const cap = typeof p.images === 'number' ? p.images : (p.images || []).length;
-  const paths = (typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[p.slug]) || [];
-  const srcs = paths.slice(0, cap);
+  const srcs = getManifest(p.slug).strip.slice(0, cap);
   if (srcs.length > 0) {
     return srcs.map(item => {
       const src    = typeof item === 'string' ? item : item.src;
@@ -420,7 +445,7 @@ const container = document.getElementById('projects');
 container.innerHTML = visible.map(p => `
 <section class="project">
   <button class="btn-plus" data-slug="${p.slug}">+</button>
-  <div class="proj-hd">
+  <div class="proj-hd" data-slug="${p.slug}">
     <div class="proj-label">
       <span class="title">${esc(p.title)}</span><span class="meta">,&nbsp;${esc(p.role)}</span>
     </div>
@@ -432,8 +457,8 @@ container.innerHTML = visible.map(p => `
   ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : ''}
 </section>`).join('');
 
-document.querySelectorAll('.btn-plus').forEach(btn => {
-  btn.addEventListener('click', function () {
+document.querySelectorAll('.btn-plus, .proj-hd').forEach(el => {
+  el.addEventListener('click', function () {
     const p = visible.find(proj => proj.slug === this.dataset.slug);
     if (p) openModal(p);
   });
@@ -478,17 +503,19 @@ document.querySelectorAll('.img-strip video').forEach(video => {
 
 // ─── Modal ───
 function buildModalImages(p) {
-  const paths    = (typeof IMAGE_MANIFEST !== 'undefined' && IMAGE_MANIFEST[p.slug]) || [];
+  const m        = getManifest(p.slug);
+  const paths    = m.modal.length ? m.modal : m.strip;
   const captions = p.captions || [];
   return paths.map((item, i) => {
     const src    = typeof item === 'string' ? item : item.src;
     const poster = typeof item === 'object' && item.poster ? item.poster : '';
     const ext    = src.split('?')[0].toLowerCase();
     const cap    = captions[i] || '';
+    const isFull = src.split('?')[0].split('/').pop().includes('_full');
     const media  = ext.endsWith('.webm')
       ? `<video src="${src}"${poster ? ` poster="${poster}"` : ''} loop muted playsinline preload="auto"></video>`
       : `<img src="${src}" alt="" loading="lazy">`;
-    return `<div class="modal-img-wrap">${media}${cap ? `<div class="modal-img-cap">${esc(cap)}</div>` : ''}</div>`;
+    return `<div class="modal-img-wrap${isFull ? ' full' : ''}">${media}${cap ? `<div class="modal-img-cap">${esc(cap)}</div>` : ''}</div>`;
   }).join('');
 }
 
