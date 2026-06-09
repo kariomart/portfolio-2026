@@ -43,11 +43,43 @@
       gap: 0 80px;
     }
 
-    /* Top rule above each column */
+    @keyframes line-in {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(-5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hd { animation: fade-up 0.18s ease both; }
+
+    /* Top rule above each column — animated */
     .info-grid > * {
-      border-top: 1px solid rgba(255,255,255,.35);
+      position: relative;
       padding-top: 20px;
     }
+    .info-grid > *::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: rgba(255,255,255,.35);
+      transform-origin: left;
+      animation: line-in 0.25s ease both;
+    }
+    .bio::before        { animation-delay: 0.08s; }
+    .info-right::before { animation-delay: 0.13s; }
+
+    /* Content fades in after lines */
+    .bio > *:nth-child(1) { animation: fade-up 0.18s ease 0.26s both; }
+    .bio > *:nth-child(2) { animation: fade-up 0.18s ease 0.31s both; }
+    .bio > *:nth-child(3) { animation: fade-up 0.18s ease 0.36s both; }
+
+    .info-section:nth-child(1) { animation: fade-up 0.18s ease 0.26s both; }
+    .info-section:nth-child(2) { animation: fade-up 0.18s ease 0.31s both; }
+    .info-section:nth-child(3) { animation: fade-up 0.18s ease 0.36s both; }
+    .info-section:nth-child(4) { animation: fade-up 0.18s ease 0.41s both; }
 
     /* ─── Left: bio ─── */
     .bio p {
@@ -76,7 +108,6 @@
     }
 
     /* ─── Right: sections ─── */
-    .info-right { padding-top: 20px; }
 
     .info-section { margin-bottom: 32px; }
     .info-section:last-child { margin-bottom: 0; }
