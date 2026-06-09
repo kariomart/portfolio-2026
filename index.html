@@ -425,7 +425,8 @@ function buildImages(p) {
       const poster = typeof item === 'object' && item.poster ? item.poster : '';
       const ext    = src.split('?')[0].toLowerCase();
       if (ext.endsWith('.webm')) {
-        return `<video src="${src}"${poster ? ` poster="${poster}"` : ''} loop muted playsinline preload="auto"></video>`;
+        if (poster) return `<img src="${poster}" data-video-src="${src}" alt="" loading="lazy">`;
+        return `<video src="${src}" loop muted playsinline preload="metadata"></video>`;
       }
       return `<img src="${src}" alt="" loading="lazy">`;
     }).join('');
@@ -526,7 +527,7 @@ function buildModalImages(p) {
     const cap    = captions[i] || '';
     const isFull = src.split('?')[0].split('/').pop().includes('_full');
     const media  = ext.endsWith('.webm')
-      ? `<video src="${src}"${poster ? ` poster="${poster}"` : ''} loop muted playsinline preload="auto"></video>`
+      ? `<video src="${src}"${poster ? ` poster="${poster}"` : ''} loop muted playsinline preload="metadata"></video>`
       : `<img src="${src}" alt="" loading="lazy">`;
     return `<div class="modal-img-wrap${isFull ? ' full' : ''}">${media}${cap ? `<div class="modal-img-cap">${esc(cap)}</div>` : ''}</div>`;
   }).join('');
@@ -577,10 +578,11 @@ function showInLightbox(media) {
   overlay.querySelectorAll('video').forEach(v => v.pause());
   overlay.innerHTML = '';
   let el;
-  if (media.tagName === 'VIDEO') {
+  if (media.tagName === 'VIDEO' || media.dataset.videoSrc) {
     el = document.createElement('video');
-    el.src = media.src;
-    if (media.getAttribute('poster')) el.poster = media.getAttribute('poster');
+    el.src = media.dataset.videoSrc || media.src;
+    const posterSrc = media.tagName === 'VIDEO' ? media.getAttribute('poster') : media.src;
+    if (posterSrc) el.poster = posterSrc;
     el.loop = true; el.muted = true; el.playsInline = true; el.autoplay = true;
   } else {
     el = document.createElement('img');
