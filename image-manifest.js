@@ -10,10 +10,12 @@ const IMAGE_MANIFEST = {
         "poster": "images/qup/01-poster.png?v=1779312316585"
       },
       {
-        "src": "images/qup/02.webm?v=1779398022612"
+        "src": "images/qup/02.webm?v=1779398022612",
+        "poster": "images/qup/02-poster.png?v=1781039383822"
       },
       {
-        "src": "images/qup/03.webm?v=1779379557021"
+        "src": "images/qup/03.webm?v=1779379557021",
+        "poster": "images/qup/03-poster.png?v=1781039338417"
       },
       {
         "src": "images/qup/04.webm?v=1779306348207",
@@ -53,7 +55,8 @@ const IMAGE_MANIFEST = {
         "poster": "images/netflix/03-poster.jpg?v=1780022461537"
       },
       {
-        "src": "images/netflix/04.webm?v=1780025117154"
+        "src": "images/netflix/04.webm?v=1780025117154",
+        "poster": "images/netflix/04-poster.png?v=1781039452861"
       },
       {
         "src": "images/netflix/06.webm?v=1780025791669",
@@ -66,14 +69,17 @@ const IMAGE_MANIFEST = {
     "strip": [
       "images/rewilding/01.jpg?v=1780074321125",
       {
-        "src": "images/rewilding/02.webm?v=1780090850911"
+        "src": "images/rewilding/02.webm?v=1780090850911",
+        "poster": "images/rewilding/02-poster.png?v=1781039500419"
       },
       "images/rewilding/03.jpg?v=1780074431027",
       {
-        "src": "images/rewilding/04.webm?v=1780074855975"
+        "src": "images/rewilding/04.webm?v=1780074855975",
+        "poster": "images/rewilding/04-poster.png?v=1781039541218"
       },
       {
-        "src": "images/rewilding/05.webm?v=1780074800793"
+        "src": "images/rewilding/05.webm?v=1780074800793",
+        "poster": "images/rewilding/05-poster.png?v=1781039607592"
       },
       "images/rewilding/06.png?v=1780074407166"
     ],
@@ -95,7 +101,8 @@ const IMAGE_MANIFEST = {
   "chrono": {
     "strip": [
       {
-        "src": "images/chrono/01.webm?v=1780089628183"
+        "src": "images/chrono/01.webm?v=1780089628183",
+        "poster": "images/chrono/01-poster.png?v=1781039656489"
       },
       "images/chrono/02.png?v=1737150364000",
       "images/chrono/03.png?v=1737150364000",
