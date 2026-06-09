@@ -7,6 +7,11 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(-5px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     html {
       background: #818787;
       color: #fff;
@@ -27,6 +32,7 @@
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 44px;
+      animation: fade-up 0.18s ease both;
     }
     .hd-name { font-weight: 400; letter-spacing: 0; }
     .hd-meta { font-size: 12px; color: rgba(255,255,255,.5); }
@@ -37,6 +43,7 @@
       max-width: 450px;
       line-height: 1.65;
       margin-bottom: 76px;
+      animation: fade-up 0.18s ease 0.08s both;
     }
     .bio em { font-style: italic; }
     .bio-br { display: block; margin-top: 0.6em; }
@@ -67,7 +74,7 @@
     .filter-notice a:hover { color: rgba(255,255,255,.7); }
 
     /* ─── Project ─── */
-    .project { margin-bottom: 68px; position: relative; }
+    .project { margin-bottom: 68px; position: relative; animation: fade-up 0.18s ease both; }
 
     .proj-hd {
       display: flex;
@@ -472,6 +479,10 @@ container.innerHTML = visible.map(p => `
   <div class="img-strip">${buildImages(p)}</div>
   ${p.quote ? `<div class="cap-q">${esc(p.quote)}</div>` : ''}
 </section>`).join('');
+
+container.querySelectorAll('.project').forEach((el, i) => {
+  el.style.animationDelay = `${0.18 + i * 0.04}s`;
+});
 
 document.querySelectorAll('.btn-plus, .proj-hd').forEach(el => {
   el.addEventListener('click', function () {
