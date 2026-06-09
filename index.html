@@ -416,7 +416,7 @@ function getManifest(slug) {
   return entry;
 }
 
-const isMobile = window.matchMedia('(max-width: 640px)').matches;
+const isMobile = window.matchMedia('(pointer: coarse)').matches;
 
 function buildImages(p) {
   const cap = typeof p.images === 'number' ? p.images : (p.images || []).length;
