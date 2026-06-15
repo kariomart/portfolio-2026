@@ -709,7 +709,7 @@ document.querySelectorAll('.img-strip').forEach(strip => {
     const media = e.target.closest('img, video');
     if (!media) return;
     const allMedia  = [...strip.querySelectorAll('img, video')];
-    const slug      = strip.closest('.project').querySelector('.btn-plus').dataset.slug;
+    const slug      = strip.closest('.project').querySelector('[data-slug]').dataset.slug;
     const projIdx   = visible.findIndex(p => p.slug === slug);
     openLightbox(media, allMedia, allMedia.indexOf(media), projIdx);
   });
