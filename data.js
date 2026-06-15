@@ -13,6 +13,7 @@
 
 const PROJECTS = [
   {
+    order: 1,
     slug: 'qup',
     title: 'Q-UP',
     tags: ['game', 'design', 'branding', 'ui/ux', 'art direction', 'sound design'],
@@ -23,8 +24,10 @@ const PROJECTS = [
     captions: ['', '', '', '', '', '', '', ''],
     quote: '',
     images: 8,
+    modal: false,
   },
   {
+    order: 2,
     slug: 'netflix',
     title: 'Netflix',
     tags: ['campaign', 'interactive', 'ux'],
@@ -32,11 +35,13 @@ const PROJECTS = [
     client: 'Netflix',
     year: '',
     description: "Snow City is a digital experience created for Coach, exploring themes of winter, nostalgia, and urban exploration. The work drew on deep UX expertise to create something both brand-aligned and genuinely playful.",
-    quote: "Digital experience created for Coach's seasonal campaign.",
+    quote: "",
     images: 5,
     captions: ['', '', '', '', '', ''],
+    modal:false,
   },
   {
+    order: 8,
     slug: 'rewilding',
     title: 'Rewilding',
     tags: ['editorial', 'ux'],
@@ -49,6 +54,7 @@ const PROJECTS = [
     modal: false,
   },
   {
+    order: 7,
     slug: 'pokernight',
     title: 'Netflix Poker Night',
     tags: ['editorial', 'ux'],
@@ -61,6 +67,7 @@ const PROJECTS = [
     modal: false,
   },
   {
+    order: 6,
     slug: 'chrono',
     title: 'CHRONO',
     tags: ['editorial', 'ux'],
@@ -73,6 +80,7 @@ const PROJECTS = [
     modal: false,
   },
   {
+    order: 6,
     slug: 'multipuck',
     title: 'MULTIPUCK',
     tags: ['editorial', 'ux'],
@@ -85,6 +93,7 @@ const PROJECTS = [
     modal: false,
   },
   {
+    order: 7,
     slug: 'noclip',
     title: 'noclip',
     tags: ['sponsored', 'ux'],
@@ -92,10 +101,12 @@ const PROJECTS = [
     client: 'Adobe',
     year: '',
     description: 'A sponsored collaboration with Adobe, distributed through Spotify, exploring the creative process and the intersection of design and technology.',
-    quote: 'Sponsored by Adobe. Available on Spotify.',
+    quote: '',
     images: 6,
+    modal: false,
   },
   {
+    order: 3,
     slug: 'snowcity',
     title: 'Coach Snow City',
     tags: ['editorial', 'ux'],
@@ -103,10 +114,12 @@ const PROJECTS = [
     client: 'Coach',
     year: '',
     description: 'Work featured in Wired magazine across stories on rewilding, climate change, and the gig economy — a visual and interactive contribution to reporting at the edge of technology and the natural world.',
-    quote: 'Featured in Wired across stories on rewilding, climate change, and gig work.',
+    quote: '',
     images: 6,
+    modal: false,
   },
   {
+    order: 4,
     slug: 'coach',
     title: 'Coach',
     tags: ['editorial', 'ux'],
@@ -114,10 +127,12 @@ const PROJECTS = [
     client: 'Coach',
     year: '',
     description: 'Work featured in Wired magazine across stories on rewilding, climate change, and the gig economy — a visual and interactive contribution to reporting at the edge of technology and the natural world.',
-    quote: 'Featured in Wired across stories on rewilding, climate change, and gig work.',
+    quote: '',
     images: 6,
+    modal: false,
   },
   {
+    order: 5,
     slug: 'linkedin',
     title: 'LinkedIn Data Communities',
     tags: ['editorial', 'ux'],
@@ -125,10 +140,12 @@ const PROJECTS = [
     client: 'LinkedIn',
     year: '',
     description: 'A sponsored collaboration with Adobe, distributed through Spotify, exploring the creative process and the intersection of design and technology.',
-    quote: 'Sponsored by Adobe. Available on Spotify.',
+    quote: '',
     images: 4,
+    modal: false,
   },
   {
+    order: 11,
     slug: 'megaware',
     title: 'MegaWare',
     tags: ['editorial', 'ux'],
@@ -138,5 +155,6 @@ const PROJECTS = [
     description: '',
     quote: '',
     images: 4,
+    modal: false,
   },
 ];
