@@ -185,7 +185,7 @@ const honorsHtml = ABOUT.honors && ABOUT.honors.length ? `
     <ul class="info-list">
       ${ABOUT.honors.map(item =>
         item.href
-          ? `<li><a href="${esc(item.href)}">${esc(item.text)}</a></li>`
+          ? `<li><a href="${esc(item.href)}" target="_blank" rel="noopener">${esc(item.text)}</a></li>`
           : `<li>${esc(item.text)}</li>`
       ).join('')}
     </ul>
@@ -202,7 +202,7 @@ document.getElementById('info-right').innerHTML =
       <ul class="info-list">
         ${s.items.map(item =>
           item.href
-            ? `<li><a href="${esc(item.href)}">${esc(item.text)}</a></li>`
+            ? `<li><a href="${esc(item.href)}" target="_blank" rel="noopener">${esc(item.text)}</a></li>`
             : `<li>${esc(item.text)}</li>`
         ).join('')}
       </ul>
