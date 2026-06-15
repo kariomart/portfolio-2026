@@ -29,9 +29,9 @@ const ABOUT = {
       label: 'Contact',
       items: [
         { text: 'Email',     href: 'mailto:martin.nayeri@gmail.com' },
-        { text: 'LinkedIn',  href: 'https://www.linkedin.com/in/martinnayeri' },
+        { text: 'LinkedIn',  href: 'https://www.linkedin.com/in/martin-nayeri' },
         { text: 'Arena',     href: 'https://www.are.na/martin' },
-        { text: 'Instagram', href: 'https://www.instagram.com/martinnayeri' },
+        { text: 'Instagram', href: 'https://www.instagram.com/kariomart/' },
       ],
     },
     {
